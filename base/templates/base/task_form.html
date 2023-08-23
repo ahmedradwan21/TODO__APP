@@ -1,0 +1,16 @@
+{% comment %} 
+{% extends 'base/main.html'%}
+
+{% block content %}
+
+{% endblock content %} {% endcomment %}
+
+<h3>Task Form</h3>
+
+<a href='{% url 'tasks' %}'> Back </a>
+
+<form method = 'POST' action=''>
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type='submit' value='Submit'>
+</form>

@@ -1,0 +1,21 @@
+
+{% comment %} 
+{% extends 'base/main.html'%}
+
+{% block content %}
+
+{% endblock content %} {% endcomment %}
+<h1> Register </h1>
+
+<form method='POST'>
+    {% csrf_token%}
+    {{form.as_p}}
+    <input type='submit' value='Register'>
+</form>
+
+
+<p> Alredy have an account ..? <a href=''>Login</a></p>
+
+
+
+

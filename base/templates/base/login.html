@@ -1,0 +1,14 @@
+{% comment %} {% extends 'base/main.html'%}
+
+{% block content %}
+
+{% endblock content %} {% endcomment %}
+<h1> Login </h1>
+
+<form method='POST'>
+    {% csrf_token%}
+    {{form.as_p}}
+    <input type='submit' value='Login'>
+</form>
+
+<p> DONOT have an account ..? <a href='{% url 'register' %}'>Register</a></p>
