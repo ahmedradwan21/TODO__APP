@@ -1,4 +1,4 @@
-
+# TODO_G3
 
 
 ## CustomLoginView Class
@@ -52,7 +52,7 @@ class RegisterPage(FormView):
             return redirect('tasks')
         return super(RegisterPage, self).get(*args, **kwargs)
 
-
+```
 # TaskList Class
 
 The `TaskList` class is a versatile view that builds on Django's built-in `ListView` to provide an organized and user-centric task list view for your application.
@@ -94,7 +94,7 @@ class TaskList(LoginRequiredMixin, ListView):
         
         return data
 
-
+```
 
 # TaskDetail Class
 
@@ -121,7 +121,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     context_object_name = 'tasks'
     template_name = 'base/task.html'
 
-
+```
 # TaskCreate Class
 
 The `TaskCreate` class facilitates the creation of new tasks within your application. By leveraging Django's built-in `CreateView`, this class streamlines the task creation process, ensuring that logged-in users can efficiently add new tasks to their workload.
@@ -149,7 +149,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(TaskCreate, self).form_valid(form)
-
+```
 
 # TaskUpdate Class
 
@@ -175,7 +175,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
-
+```
 # TaskDeleteView Class
 
 The `TaskDeleteView` class offers users the ability to remove specific task instances efficiently and securely. Utilizing Django's `DeleteView`, this class streamlines the task deletion process while maintaining data integrity.
@@ -200,7 +200,7 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = 'tasks'
     success_url = reverse_lazy('tasks')
-
+```
 
 # Django's Built-In Database Capabilities: Streamlining Development
 
