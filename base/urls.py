@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib import admin
 from .views import TaskList, TaskDetail, TaskCreate, TaskUpdate ,DeleteView,CustomLoginView,RegisterPage
 from django.contrib.auth.views import LogoutView
 
@@ -13,3 +14,7 @@ urlpatterns = [
     path('task-update/<int:pk>/', TaskUpdate.as_view(), name='task-update'),
     path('task-delete/<int:pk>/', DeleteView.as_view(), name='task-delete'),
 ]
+
+admin.site.index_title = 'Ahmed Tarek Radwan(ATR) 🦅 & Dragons 🐉'
+admin.site.site_header = 'Dragons 🐉'
+admin.site.site_title = "TODO_LIST_APP 🦅 "

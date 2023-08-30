@@ -5,42 +5,184 @@
 {% endblock content %}
 {% endcomment %}
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        .add-task {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .add-task:hover {
+            background-color: #0056b3;
+        }
+        .search-form {
+            margin-top: 10px;
+        }
+        .no-items {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+        .hello p {
+            color: #333;
+            font-weight: 10px;
+            margin: 0;
+        }
+        .hello a {
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        .hello {
+            text-align: right;
+            padding: 10px 20px;
+            background-color: #333;
+        }
+        .logout-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .logout-button:hover {
+            background-color: #0056b3;
+        }
+        .search-input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+        }
+        .search-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        a.view-link {
+            color: #28a745; 
+            text-decoration: none;
+            margin-right: 10px;
+        }
 
+        a.edit-link {
+            color: #007bff; 
+            text-decoration: none;
+            margin-right: 10px;
+        }
 
-
-
-{% if request.user.is_authenticated %}
-<p>{{request.user}}</p>
-<a href='{%url 'logout' %}'>Logout</a>
-{% else %}
-<a href='{%url 'login' %}'>Login</a>
-{% endif %}
-
-<hr>
-<h1> hello it is me todoList {{color}} </h1>
-
-<a href='{% url 'task-create' %}'>Add Task</a>
-
-<form method='GET'>
-    <input type='text' name='search-area' value= '{{search_input}}'>
-    <input type='submit' value='Search'>
-</form>
-
-
-<table>
-    <tr>
-        <th>Item</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for task in tasks %}
-    <tr>
-        <td>{{task.title}}</td>
-        <td><a href='{% url 'task' task.id %}'>View</a></td>
-        <td><a href='{% url 'task-update' task.id %}'>Edit</a></td>
-        <td><a href='{% url 'task-delete' task.id %}'>Delete</a></td>
-    <tr>
-    {%empty%}
-    <h1> NO items in list </h1>
-    {% endfor %}
-</table>
+        a.delete-link {
+            color: #dc3545; 
+            text-decoration: none;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hello">     
+        {% if request.user.is_authenticated %}
+        <p>{{ request.user }}</p>
+        <button class="logout-button">
+        <a href="{% url 'logout' %}">LOGOUT</a>
+        </button> 
+        {% else %}
+        <button class="logout-button">
+        <a href="{% url 'login' %}">LOGIN</a>
+        </button>
+        {% endif %} 
+    </div>
+    <div class="header">
+        {% if request.user.is_authenticated %}
+        <p>{{ request.user }}</p>
+        <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+        <hr>
+        <h1>Welcome {{ request.user }} to My Todo List</h1>
+        <a href="{% url 'task-create' %}" class="add-task">Add Task</a>
+        <form method="GET" class="search-form">
+            <input type="text" name="search-area" value="{{ search_input }}" class="search-input" placeholder="Search Tasks">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Tasks</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td><a href="{% url 'task' task.id %}" class="view-link">View</a></td>
+                <td><a href="{% url 'task-update' task.id %}" class="edit-link">Edit</a></td>
+                <td><a href="{% url 'task-delete' task.id %}" class="delete-link">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="no-items"><h1>No items in the list</h1></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

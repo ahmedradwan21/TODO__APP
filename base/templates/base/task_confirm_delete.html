@@ -1,16 +1,81 @@
-{% comment %} 
-{% extends 'base/main.html'%}
+{% comment %}
+{% extends 'base/main.html' %}
 {% block content %}
+{% endblock content %}
+{% endcomment %}
 
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-{% endblock content %} {% endcomment %}
+        .delete-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
 
+        .delete-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-<a href='{% url 'tasks' %}'> Back </a>
+        .delete-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-<form method = 'POST' >
-    {% csrf_token %}
-    <p>Are y sur delete this ....!'{{tasks}}'</p>
-    <input type='submit' value='Delete'/>
-</form>
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="delete-container">
+        <h1 class="delete-header">Delete Task</h1>
+
+        <form method="POST" class="delete-form">
+            {% csrf_token %}
+            <p>Are you sure you want to delete this task: '{{ tasks }}'?</p>
+            <input type="submit" class="delete-button" value="Delete">
+        </form>
+
+        <p class="back-link"><a href="{% url 'tasks' %}" class="back-link">Back to Task List</a></p>
+    </div>
+</body>
+</html>

@@ -3,12 +3,84 @@
 {% block content %}
 
 {% endblock content %} {% endcomment %}
-<h1> Login </h1>
 
-<form method='POST'>
-    {% csrf_token%}
-    {{form.as_p}}
-    <input type='submit' value='Login'>
-</form>
 
-<p> DONOT have an account ..? <a href='{% url 'register' %}'>Register</a></p>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #cfcfcf;
+        }
+    
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 180px;
+        }
+    
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .login-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+    
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+    
+        .register-link a {
+            color: #fffff;
+            text-decoration: none;
+        }
+    
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="login-header">Login</h1>
+    
+        <form method="POST" class="login-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    
+        <p class="register-link">Don't have an account? <a href="{% url 'register' %}" class="register-link">Register</a></p>
+    </div> 
+</body>
+</html>
+

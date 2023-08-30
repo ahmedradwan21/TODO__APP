@@ -1,1 +1,61 @@
-<h1>Task:{{tasks}} </h1>
+{% comment %}
+{% extends 'base/main.html'%}
+
+{% block content %}
+
+{% endblock content %}
+{% endcomment %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .task-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .task-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3> Task Detail </h3>
+    </div>
+    <div class="container">
+        <h1 class="task-title">Task: {{ tasks}}</h1>
+        <a href="{% url 'tasks' %}" class="back-link">Back to Task List</a>
+    </div>
+</body>
+</html>

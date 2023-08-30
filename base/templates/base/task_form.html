@@ -1,16 +1,83 @@
-{% comment %} 
-{% extends 'base/main.html'%}
 
-{% block content %}
 
-{% endblock content %} {% endcomment %}
-
-<h3>Task Form</h3>
-
-<a href='{% url 'tasks' %}'> Back </a>
-
-<form method = 'POST' action=''>
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type='submit' value='Submit'>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        form label {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        form input[type='text'], form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        form input[type='submit'] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form input[type='submit']:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        .back-link {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>Create Task</h3>
+        <a href="{% url 'tasks' %}" class="back-link">Back to Task List</a>
+    </div>
+    {% comment %} href='{% url 'tasks' %} {% endcomment %}
+    <div class="container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

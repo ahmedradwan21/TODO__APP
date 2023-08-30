@@ -5,17 +5,84 @@
 {% block content %}
 
 {% endblock content %} {% endcomment %}
-<h1> Register </h1>
 
-<form method='POST'>
-    {% csrf_token%}
-    {{form.as_p}}
-    <input type='submit' value='Register'>
-</form>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
+        .register-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 91px;
+        }
 
-<p> Alredy have an account ..? <a href=''>Login</a></p>
+        .register-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
+        .register-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <center>
+
+<div class="register-container">
+    <h1 class="register-header">Register</h1>
+
+    <form method="POST" class="register-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="register-button" value="Register">
+    </form>
+
+    <p class="login-link">Already have an account? <a href="{% url 'login' %}" class="login-link">Login</a></p>
+</div>
+
+</body>
+</html>
 
 
