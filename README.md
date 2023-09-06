@@ -51,7 +51,7 @@ class RegisterPage(FormView):
         if self.request.user.is_authenticated:
             return redirect('tasks')
         return super(RegisterPage, self).get(*args, **kwargs)
-
+```
 
 # TaskList Class
 
@@ -94,7 +94,7 @@ class TaskList(LoginRequiredMixin, ListView):
         
         return data
 
-
+```
 
 # TaskDetail Class
 
@@ -120,7 +120,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'tasks'
     template_name = 'base/task.html'
-
+```
 
 # TaskCreate Class
 
@@ -150,7 +150,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super(TaskCreate, self).form_valid(form)
 
-
+```
 # TaskUpdate Class
 
 The `TaskUpdate` class empowers users to modify and update specific task instances seamlessly. Leveraging Django's built-in `UpdateView`, this class simplifies the process of editing tasks while maintaining data security.
@@ -175,7 +175,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
-
+```
 # TaskDeleteView Class
 
 The `TaskDeleteView` class offers users the ability to remove specific task instances efficiently and securely. Utilizing Django's `DeleteView`, this class streamlines the task deletion process while maintaining data integrity.
@@ -200,7 +200,7 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = 'tasks'
     success_url = reverse_lazy('tasks')
-
+```
 
 # Django's Built-In Database Capabilities: Streamlining Development
 
