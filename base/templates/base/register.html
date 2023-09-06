@@ -66,21 +66,27 @@
             text-decoration: underline;
         }
     </style>
+
+
+
 </head>
 <body>
     <center>
 
-<div class="register-container">
-    <h1 class="register-header">Register</h1>
-
-    <form method="POST" class="register-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="register-button" value="Register">
-    </form>
-
-    <p class="login-link">Already have an account? <a href="{% url 'login' %}" class="login-link">Login</a></p>
-</div>
+        <form method="POST" class="register-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="groups">Select Permission Level:</label>
+            <select id="groups" name="groups">
+                <option value="Viewer">Viewer</option>
+                <option value="Member">Member</option>
+                <option value="admin">Admin</option>
+            </select>
+            <br>
+            <input type="submit" class="register-button" value="Register">
+        </form>
+            <p class="login-link">Already have an account? <a href="{% url 'login' %}" class="login-link">Login</a></p>
+        </div>
 
 </body>
 </html>

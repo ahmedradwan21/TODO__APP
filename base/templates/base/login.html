@@ -72,15 +72,23 @@
 <body>
     <div class="login-container">
         <h1 class="login-header">Login</h1>
-    
-        <form method="POST" class="login-form">
+        
+        <form method="post" class="login-form">
             {% csrf_token %}
             {{ form.as_p }}
+
+            <!-- Rest of your form fields here -->
+            <label for="groups">Select Permission Level:</label>
+            <select id="groups" name="groups">
+                <option value="Viewer">Viewer</option>
+                <option value="member">Member</option>
+                <option value="admin">Admin</option>
+            </select>
+            <br>
             <button type="submit" class="login-button">Login</button>
         </form>
-    
         <p class="register-link">Don't have an account? <a href="{% url 'register' %}" class="register-link">Register</a></p>
-    </div> 
+    </div>
 </body>
 </html>
 
