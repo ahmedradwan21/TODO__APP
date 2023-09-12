@@ -19,6 +19,9 @@ from django.contrib.auth.models import Group
 from django.contrib import messages
 
 
+
+
+
 # the CustomLoginView class is a custom view for user login. It extends Django's built-in LoginView and customizes certain aspects:
 # 1. It uses the specified template for rendering the login page.
 # 2. It allows all fields to be displayed in the login form.
@@ -26,14 +29,17 @@ from django.contrib import messages
 # 4. After successful login, the user is redirected to the task list view using the get_success_url method.
 
 
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
+
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
     fields = '__all__' 
     redirect_authenticated_user = True
-    
+
     def get_success_url(self):
         return reverse_lazy('tasks')
-    
+
 
 
 class RegisterPage(FormView):
@@ -60,6 +66,34 @@ class RegisterPage(FormView):
             return redirect('tasks')
         return super(RegisterPage, self).get( *args, **kwargs)
 
+
+# -----------------------------------------------------
+
+from rest_framework import viewsets
+from .models import Task
+from .serializers import TaskSerializer
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+from rest_framework import generics
+from django.db.models import Q
+from .models import Task
+from .serializers import TaskSerializer
+
+class TaskFilterView(generics.ListAPIView):
+    serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        status = self.request.query_params.get('status', '')  
+        if status.lower() == 'complete':
+            return Task.objects.filter(complete=True)
+        elif status.lower() == 'incomplete':
+            return Task.objects.filter(complete=False)
+        return Task.objects.all()
+
+# -----------------------------------------------------
 
 
 class TaskList(LoginRequiredMixin,ListView):

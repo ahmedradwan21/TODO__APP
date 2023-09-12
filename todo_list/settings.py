@@ -32,7 +32,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'base.apps.BaseConfig',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+import datetime
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
