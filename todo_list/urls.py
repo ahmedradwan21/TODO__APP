@@ -25,18 +25,13 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from base.views import CustomLoginView, RegisterPage
-from base.views import TaskViewSet
+# from base.views import TaskViewSet
 
-# Create a router for the API views
-router = DefaultRouter()
-router.register(r'todos', TaskViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', CustomLoginView.as_view(), name='login'),
-    path('register/', RegisterPage.as_view(), name='register'),
-    path('api/', include(router.urls)),  # Include the API endpoints
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
     path('', include('base.urls')),
 ]

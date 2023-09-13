@@ -1,3 +1,4 @@
+import datetime
 from typing import Any, Dict
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
@@ -69,30 +70,85 @@ class RegisterPage(FormView):
 
 # -----------------------------------------------------
 
-from rest_framework import viewsets
+# from rest_framework import viewsets
+# from .models import Task
+# from .serializers import TaskSerializer
+
+# class TaskViewSet(viewsets.ModelViewSet):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer
+
+# from rest_framework import generics
+# from django.db.models import Q
+# from .models import Task
+# from .serializers import TaskSerializer
+
+# class TaskFilterView(generics.ListAPIView):
+#     serializer_class = TaskSerializer
+
+#     def get_queryset(self):
+#         status = self.request.query_params.get('status', '')  
+#         if status.lower() == 'complete':
+#             return Task.objects.filter(complete=True)
+#         elif status.lower() == 'incomplete':
+#             return Task.objects.filter(complete=False)
+#         return Task.objects.all()
+
+# base/views.py
+# from rest_framework import generics
+# from rest_framework.permissions import IsAuthenticated
+# from .models import Task
+# from .serializers import TaskSerializer
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework import status
+
+# class TaskListAPIView(generics.ListCreateAPIView):
+#     queryset = Task.objects.all()
+#     serializer_class = TaskSerializer
+
+
+# class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = TaskSerializer
+#     queryset = Task.objects.all()
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import permissions
 from .models import Task
 from .serializers import TaskSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
-class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = TaskSerializer
 
-from rest_framework import generics
-from django.db.models import Q
-from .models import Task
-from .serializers import TaskSerializer
+class TodoListApiView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-class TaskFilterView(generics.ListAPIView):
-    serializer_class = TaskSerializer
+    def get(self, request, *args, **kwargs):
+        todos = Task.objects.filter(user=request.user)
+        serializer = TaskSerializer(todos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def get_queryset(self):
-        status = self.request.query_params.get('status', '')  
-        if status.lower() == 'complete':
-            return Task.objects.filter(complete=True)
-        elif status.lower() == 'incomplete':
-            return Task.objects.filter(complete=False)
-        return Task.objects.all()
-
+    def post(self, request, *args, **kwargs):
+        fields = ["user", "title", "description", "created", "complete"]
+        data = {
+                'title': request.data.get('title'),  # Use 'title' instead of 'task'
+                'description': request.data.get('description'),
+                'created': datetime.now(),  # You need to set the 'created' field properly
+                'complete': request.data.get('completed'),
+                'user': request.user.id
+            }
+        serializer = TaskSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # -----------------------------------------------------
 
 
@@ -106,11 +162,9 @@ class TaskList(LoginRequiredMixin,ListView):
         data['count'] = data['tasks'].filter(complete=False).count()
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
-            data['tasks'] = data['tasks'].filter(
-                title__startswith=search_input)
-        data['search_input'] = search_input
+            data['tasks'] = data['tasks'].filter(title__startswith=search_input)
+            data['search_input'] = search_input
         return data
-    
     
 
 
