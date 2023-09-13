@@ -49,7 +49,6 @@ REST_FRAMEWORK = {
 
 # import datetime
 
-<<<<<<< HEAD
 # JWT_AUTH = {
 #     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=24),
 # }
@@ -64,10 +63,6 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('Bearer',),
-=======
-JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
->>>>>>> b6db2e574b5c825c3e94a5f7ccd3904ef6601cc4
 }
 
 MIDDLEWARE = [
